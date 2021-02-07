@@ -1,52 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap");
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: pale(0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: pale(0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
 html {
   font-size: 100%;
   box-sizing: border-box;
@@ -67,181 +19,11 @@ body {
   user-select: none;
 }
 
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: pale(0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: pale(0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: pale(0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: pale(0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
 main {
-  position: relative;
   position: relative;
   width: 100%;
   height: 100vh;
   background: linear-gradient(to right, #4ac29a, #bdfff3);
-  overflow: hidden;
   display: grid;
   place-items: center;
 }
@@ -253,7 +35,7 @@ main::before {
   height: 100%;
   left: 0;
   top: 0;
-  background-image: url(/doc/elevators.jpg);
+  background-image: url(/doc/city.jpg);
   background-size: cover;
   background-position: center center;
   opacity: 0.3;
@@ -269,7 +51,7 @@ main::before {
   flex-direction: column;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7), -5px -5px 10px rgba(200, 200, 200, 0.7);
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: pale(0.8);
   border: 5px dotted  #f0bb0e36;
 }
 
@@ -383,101 +165,5 @@ main::before {
   right: 0;
   bottom: 0;
   transform: translateY(-600%);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.absmid {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.button {
-  outline: none;
-  border: none;
-  display: inline-block;
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: .25rem;
-}
-
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-}
-
-.button:active {
-  transform: scale(0.98);
 }
 /*# sourceMappingURL=style.css.map */

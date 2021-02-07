@@ -96,7 +96,6 @@ const renderBlockButton = (_, i) => {
 	arrowUp.classList.add('fas', 'fa-chevron-up');
 	arrowDown.classList.add('fas', 'fa-chevron-down');
 	const btn = document.createElement('button');
-	// btn.setAttribute('data-id', `${i}`);
 	const span = document.createElement('span');
 	span.textContent = `${i}`;
 	btn.prepend(arrowUp, span, arrowDown);
