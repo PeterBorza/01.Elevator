@@ -56,7 +56,6 @@ const elevator = () => {
 			let target = e.target.textContent;
 			liftA.style.transform = `translateY(${-target}00%)`;
 			a = Number(target);
-			p(a, b);
 		}
 	});
 
@@ -65,7 +64,6 @@ const elevator = () => {
 			let target = e.target.textContent;
 			liftB.style.transform = `translateY(${-target}00%)`;
 			b = Number(target);
-			p(a, b);
 		}
 	});
 
