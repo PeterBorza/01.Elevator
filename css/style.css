@@ -30,34 +30,36 @@ main {
 
 main::before {
   position: absolute;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
-  background-image: url(/doc/city.jpg);
+  background-image: url(/img/city.jpg);
   background-size: cover;
-  background-position: center center;
-  opacity: 0.3;
+  background-position: center bottom;
+  opacity: 0.8;
 }
 
 .block {
   position: relative;
-  width: 450px;
-  height: 70vh;
+  width: 400px;
+  max-width: 90%;
+  height: 91vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7), -5px -5px 10px rgba(200, 200, 200, 0.7);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7), -5px -5px 10px rgba(0, 0, 0, 0.7);
   border-radius: 5px;
-  background-color: pale(0.8);
-  border: 5px dotted  #f0bb0e36;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 3px solid #f0bb0e36;
 }
 
 .block::before {
   position: absolute;
-  content: "A";
+  content: 'A';
   left: 25%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -68,7 +70,7 @@ main::before {
 
 .block::after {
   position: absolute;
-  content: "B";
+  content: 'B';
   left: 75%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -98,72 +100,86 @@ main::before {
   flex-direction: column;
   height: 10vh;
   padding: 12px 16px;
-  border: 1px solid black;
-  background-color: inherit;
+  font-size: 18px;
+  border: 1px solid #298C93;
+  background-color: transparent;
   cursor: pointer;
 }
 
 .myPosition button:hover {
-  background-color: black;
+  background-color: white;
+  box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.8), 5px 5px 40px rgba(255, 255, 255, 0.8), -5px -5px 60px rgba(255, 255, 255, 0.8);
+  border: none;
 }
 
-.myPosition button i {
-  font-size: 15px;
-  color: white;
-}
-
-.myPosition button i:hover {
-  color: grey;
-}
-
-.myPosition button span {
-  color: #298C93;
-  font-size: 20px;
+.myPosition button.open {
+  background-color: white;
+  box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.8), 5px 5px 40px rgba(255, 255, 255, 0.8), -5px -5px 60px rgba(255, 255, 255, 0.8);
+  border: none;
+  z-index: 1;
 }
 
 .liftA,
 .liftB {
   position: absolute;
-  width: 45%;
-  height: 10vh;
+  width: 30%;
+  height: 12.5vh;
   background-color: transparent;
-  box-shadow: 3px 3px 3px rgba(255, 255, 255, 0.6), -3px -3px 3px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.575);
   bottom: 0;
   border-radius: 5px;
-  z-index: 1;
   color: red;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: row;
-  transition: transform 800ms ease-in-out;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  transition: transform 2000ms ease-in-out;
 }
 
-.liftA button,
-.liftB button {
-  padding: 17px 10px;
-  border: none;
-  outline: none;
-  background-color: white;
-  border-radius: 4px;
-  color: #298C93;
-}
-
-.liftA button:hover,
-.liftB button:hover {
-  color: white;
-  background-color: rgba(192, 192, 192, 0.486);
-  cursor: pointer;
+.liftA::after,
+.liftB::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  width: 1px;
+  height: 60%;
+  background-color: limegreen;
 }
 
 .liftA {
-  left: 0;
-  bottom: 0;
+  left: 10%;
+  bottom: 0.8vh;
+  box-shadow: 0px 3px 5px rgba(200, 200, 200, 0.7);
 }
 
 .liftB {
-  right: 0;
-  bottom: 0;
+  right: 10%;
+  bottom: 0.8vh;
   transform: translateY(-600%);
+  box-shadow: 0px 3px 5px rgba(200, 200, 200, 0.7);
+}
+
+.panel {
+  position: relative;
+  width: 40%;
+  height: 11vh;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px 0px 5px 0px;
+}
+
+.panel button {
+  flex: 1 1 40%;
+  width: 20px;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  border-radius: 2px;
+  color: #298C93;
+}
+
+.panel button:hover {
+  color: #9deaf0;
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */
