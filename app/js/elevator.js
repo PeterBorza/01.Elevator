@@ -8,11 +8,7 @@ const div = className => {
 	return x;
 };
 
-// ******************************************
-
 const storeyCount = 7;
-
-const num = [5, 6, 3, 4, 1, 2, 0];
 
 // ****************************************
 //  SETUP
@@ -41,17 +37,19 @@ const elevator = () => {
 	});
 
 	// ******************************************
-	//  SHAFT A
+	//  LIFT A
 
 	let a = 0;
 	let b = 6;
 
-	const shaftA = div('shaftA');
 	const liftA = div('liftA');
 	const panelA = div('panel');
 	liftA.append(panelA);
-	// const liftAButtons = new Array(storeyCount).fill().map(renderLiftButton);
-	const liftAButtons = num.map(renderLiftButton);
+	const liftAButtons = new Array(storeyCount)
+		.fill()
+		.map(renderLiftButton)
+		.reverse();
+	// const liftAButtons = num.map(renderLiftButton);
 	liftAButtons.forEach(btn => {
 		btn.addEventListener('click', e => {
 			e.stopPropagation;
@@ -67,17 +65,18 @@ const elevator = () => {
 		});
 		panelA.append(btn);
 	});
-	shaftA.append(liftA);
 
 	// ************************************************
-	//  SHAFT B
+	//  LIFT B
 
-	const shaftB = div('shaftB');
 	const liftB = div('liftB');
 	const panelB = div('panel');
 	liftB.append(panelB);
-	// const liftBButtons = new Array(storeyCount).fill().map(renderLiftButton);
-	const liftBButtons = num.map(renderLiftButton);
+	const liftBButtons = new Array(storeyCount)
+		.fill()
+		.map(renderLiftButton)
+		.reverse();
+	// const liftBButtons = num.map(renderLiftButton);
 
 	liftBButtons.forEach(btn => {
 		btn.addEventListener('click', e => {
@@ -94,7 +93,6 @@ const elevator = () => {
 		});
 		panelB.append(btn);
 	});
-	shaftB.append(liftB);
 
 	// **************************************************
 	// EVENTLISTENERS
@@ -111,7 +109,7 @@ const elevator = () => {
 		}
 	});
 
-	block.append(shaftA, myPosition, shaftB);
+	block.append(liftA, myPosition, liftB);
 
 	return block;
 };
@@ -125,10 +123,10 @@ const renderBlockButton = (_, i) => {
 	return btn;
 };
 // work on these
-const renderLiftButton = item => {
+const renderLiftButton = (_, i) => {
 	const btn = document.createElement('button');
-	btn.innerHTML = `${item}`;
-	btn.setAttribute('data-id', `${item}`);
+	btn.innerHTML = `${i}`;
+	btn.setAttribute('data-id', `${i}`);
 
 	return btn;
 };

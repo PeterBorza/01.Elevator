@@ -182,4 +182,32 @@ main::before {
   color: #9deaf0;
   cursor: pointer;
 }
+
+.panel button:nth-of-type(1) {
+  order: 2;
+}
+
+.panel button:nth-of-type(2) {
+  order: 1;
+}
+
+.panel button:nth-of-type(3) {
+  order: 4;
+}
+
+.panel button:nth-of-type(4) {
+  order: 3;
+}
+
+.panel button:nth-of-type(5) {
+  order: 6;
+}
+
+.panel button:nth-of-type(6) {
+  order: 5;
+}
+
+.panel button:nth-of-type(7) {
+  order: 7;
+}
 /*# sourceMappingURL=style.css.map */
