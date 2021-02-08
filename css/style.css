@@ -79,11 +79,6 @@ main::before {
   font-size: 200px;
 }
 
-.shaftA,
-.shaftB {
-  display: grid;
-}
-
 .myPosition {
   width: 20%;
   height: 100%;
