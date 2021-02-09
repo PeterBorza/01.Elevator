@@ -36,7 +36,7 @@ body {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
-  transition: transform 2000ms linear;
+  transition: transform 2200ms linear;
 }
 
 .liftA::after {
@@ -239,7 +239,7 @@ body {
     transform: translateY(0%);
   }
   15% {
-    transform: translateY(13%);
+    transform: translateY(12%);
   }
   100% {
     transform: translateY(-100%);
