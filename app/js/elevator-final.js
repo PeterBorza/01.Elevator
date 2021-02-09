@@ -37,7 +37,7 @@ const elevator = () => {
 		.map(renderButton)
 		.reverse();
 	liftAButtons[6].classList.add('panel-open');
-	liftAButtons.forEach(btn => {
+	liftAButtons.forEach((btn, i) => {
 		btn.setAttribute('data-name', 'liftA-button');
 		panelA.append(btn);
 	});
@@ -58,41 +58,78 @@ const elevator = () => {
 		panelB.append(btn);
 	});
 
-	// **************************************************
-	// the direction of each lift established by the position, which is the level number(button innerText)
 	// SHAFT *********************************************
+
 	const myPosition = div('myPosition');
 	const buttons = new Array(storeyCount).fill().map(renderButton).reverse();
-	// buttons[6].classList.add('light-up');
 
 	buttons.forEach(btn => {
 		btn.setAttribute('data-name', 'floor-button');
+
+		arrow(btn, 'down');
+		arrow(btn, 'up');
 		myPosition.append(btn);
 	});
 
 	block.append(liftA, myPosition, liftB);
-	// p(Array.from(myPosition.children));
-	// p(Array.from(block.children));
 
 	// ***************************************************
 	// ***************************************************
 
-	//  EVENTLISTENERS
+	//  EVENTLISTENERS on the main block element
 
 	block.addEventListener('click', e => {
 		let target = e.target;
-		let state = Number(target.innerHTML);
+		let state = Number(target.innerText);
 
+		e.stopPropagation;
+		const mainButtons = Array.from(myPosition.children);
 		let currentPositionA = counterA;
 		let currentPositionB = counterB;
+
+		// *************************************
+		//  if elevator is on the floor already
+
+		if (counterA == state) {
+			liftA.classList.add('lift-animation');
+			return;
+		} else if (counterB == state) {
+			liftB.classList.add('lift-animation');
+			return;
+		} else {
+			liftA.classList.remove('lift-animation');
+			liftB.classList.remove('lift-animation');
+		}
+
+		// STATE CHANGE FUNCTIONS
+
+		const moveState = index => {
+			mainButtons.forEach(btn => {
+				btn.style.color = 'transparent';
+				Array.from(btn.children)[index].style.opacity = '1';
+			});
+		};
+
+		const transitionFinish = target => {
+			target.addEventListener('transitionend', () => {
+				mainButtons.forEach(btn => {
+					btn.style.color = 'limegreen';
+					Array.from(btn.children).forEach(
+						item => (item.style.opacity = '0')
+					);
+				});
+			});
+		};
 
 		// LIFT A BUTTONS***********************************************
 
 		if (target.getAttribute('data-name') == 'liftA-button') {
+			// animating the panel buttons
 			Array.from(panelA.children).forEach(item => {
 				item.classList.remove('panel-open');
 			});
 			target.classList.add('panel-open');
+
 			liftA.style.transform = `translateY(${-state}00%)`;
 
 			floorLights(myPosition, state);
@@ -100,20 +137,15 @@ const elevator = () => {
 
 			// DIRECTION OF LIFT A
 
-			if (currentPositionA > counterA) {
-				p('A going down');
-			} else {
-				p('A going up');
-			}
+			currentPositionA > counterA ? moveState(1) : moveState(0);
 
 			// TRANSITIONEND LIFT A
 
-			liftA.addEventListener('transitionend', () => {
-				p('A arrived');
-			});
+			transitionFinish(liftA);
 
 			// LIFT B BUTTONS********************************************
 		} else if (target.getAttribute('data-name') == 'liftB-button') {
+			// animating the panel buttons
 			Array.from(panelB.children).forEach(item => {
 				item.classList.remove('panel-open');
 			});
@@ -126,22 +158,18 @@ const elevator = () => {
 
 			// DIRECTION OF LIFT B
 
-			if (currentPositionB > counterB) {
-				p(' B going down');
-			} else {
-				p(' B going up');
-			}
+			currentPositionB > counterB ? moveState(1) : moveState(0);
 
 			// TRANSITIONEND LIFT B
 
-			liftB.addEventListener('transitionend', () => p('B arrived'));
+			transitionFinish(liftB);
 
 			// FLOOR BUTTONS***********************************************
 		} else if (target.getAttribute('data-name') == 'floor-button') {
 			e.stopPropagation;
 			let floorNumber = Number(target.innerText);
 			let distanceAB = Math.floor((counterA + counterB) / 2);
-			const mainButtons = Array.from(myPosition.children);
+
 			// **toggling the lights
 
 			mainButtons.forEach(item => {
@@ -159,25 +187,11 @@ const elevator = () => {
 				liftA.style.transform = `translateY(${-floorNumber}00%)`;
 				liftLights(panelA, floorNumber);
 				counterA = floorNumber;
-				if (currentPositionA > counterA) {
-					p('A going down');
-					mainButtons.forEach(btn => {
-						btn.style.color = 'transparent';
-						arrow(btn, 'down');
-					});
-				} else {
-					p('A going up');
-					mainButtons.forEach(btn => {
-						btn.style.color = 'transparent';
-						arrow(btn, 'up');
-					});
-				}
-				liftA.addEventListener('transitionend', () => {
-					mainButtons.forEach(btn => {
-						btn.firstElementChild.remove();
-						btn.style.color = 'white';
-					});
-				});
+
+				//  State change
+				currentPositionA > counterA ? moveState(1) : moveState(0);
+
+				transitionFinish(liftA);
 			} else if (
 				(counterA <= counterB && floorNumber > distanceAB) ||
 				(counterA >= counterB && floorNumber <= distanceAB)
@@ -185,33 +199,21 @@ const elevator = () => {
 				liftB.style.transform = `translateY(${-floorNumber}00%)`;
 				liftLights(panelB, floorNumber);
 				counterB = floorNumber;
-				if (currentPositionB > counterB) {
-					p(' B going down');
-					mainButtons.forEach(btn => {
-						btn.style.color = 'transparent';
-						arrow(btn, 'down');
-					});
-				} else {
-					p(' B going up');
-					mainButtons.forEach(btn => {
-						btn.style.color = 'transparent';
-						arrow(btn, 'up');
-					});
-				}
-				liftB.addEventListener('transitionend', () => {
-					mainButtons.forEach(btn => {
-						btn.firstElementChild.remove();
-						btn.style.color = 'white';
-					});
-				});
+
+				// state change
+				currentPositionB > counterB ? moveState(1) : moveState(0);
+
+				transitionFinish(liftB);
 			}
+			p(
+				`state: ${state} - currentPosA: ${currentPositionA} -  currentPosB: ${currentPositionB} - counterA: ${counterA} - counterB: ${counterB}`
+			);
 		} else return;
 	});
 
 	return block;
 };
 
-// *******************************************************
 // *******************************************************
 //  MAPPING THE BUTTON ARRAY
 

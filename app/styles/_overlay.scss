@@ -30,3 +30,18 @@
 		width: 55%;
 	}
 }
+
+.overlay.animate {
+	animation: vanish 1000ms ease-in-out forwards;
+	@keyframes vanish {
+		0% {
+			transform: translateY(0%);
+		}
+		15% {
+			transform: translateY(15%);
+		}
+		100% {
+			transform: translateY(-100%);
+		}
+	}
+}
