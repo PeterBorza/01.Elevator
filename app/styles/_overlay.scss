@@ -1,0 +1,32 @@
+.overlay {
+	position: absolute;
+	width: $w;
+	height: $w;
+	left: 0;
+	top: 0;
+	background: black;
+	z-index: 1;
+	transition: transform 700ms ease-in-out;
+	@include fCenter(column);
+	text-align: left;
+	h1 {
+		color: rgba(255, 255, 255, 0.678);
+		font-size: 110px;
+		background: linear-gradient(to top, #283048, #859398);
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-transform: uppercase;
+	}
+	h2 {
+		color: rgba(255, 255, 255, 0.781);
+		font-size: 45px;
+		margin-bottom: 3vh;
+	}
+	h3 {
+		color: rgba(255, 255, 255, 0.651);
+		font-size: 23px;
+		letter-spacing: 1px;
+		line-height: 1.4;
+		width: 55%;
+	}
+}
