@@ -4,9 +4,8 @@ const startUpPage = () => {
 	const overLay = div('overlay');
 
 	overLay.addEventListener('click', () => {
-		// overLay.style.transition = 'transform 700ms ease-in-out';
-		overLay.style.transform = 'translateY(-100%)';
-		setTimeout(() => overLay.remove(), 1000);
+		overLay.classList.add('animate');
+		setTimeout(() => overLay.remove(), 1300);
 	});
 
 	const title1 = document.createElement('h1');

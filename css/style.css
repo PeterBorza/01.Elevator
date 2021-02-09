@@ -36,7 +36,7 @@ body {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
-  transition: transform 1000ms linear;
+  transition: transform 2000ms linear;
 }
 
 .liftA::after {
@@ -49,6 +49,23 @@ body {
   background-color: red;
 }
 
+.liftA::before {
+  content: 'Eleveitar A';
+  position: absolute;
+  left: 10%;
+  top: -30%;
+  width: 100%;
+  height: 10px;
+  color: white;
+  font-size: 20px;
+}
+
+.liftA:hover::before {
+  content: 'Choose floor';
+  left: 5%;
+  color: red;
+}
+
 .liftB {
   position: absolute;
   width: 30%;
@@ -56,7 +73,7 @@ body {
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.575);
   right: 10%;
-  bottom: 0.8vh;
+  bottom: 1vh;
   transform: translateY(-600%);
   box-shadow: 0px 3px 5px rgba(200, 200, 200, 0.7);
   border-radius: 5px;
@@ -66,7 +83,7 @@ body {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
-  transition: transform 1000ms linear;
+  transition: transform 2000ms linear;
 }
 
 .liftB::after {
@@ -77,6 +94,23 @@ body {
   width: 1px;
   height: 60%;
   background-color: limegreen;
+}
+
+.liftB::before {
+  content: 'Eleveitar B';
+  position: absolute;
+  left: 10%;
+  top: -30%;
+  width: 100%;
+  height: 10px;
+  color: white;
+  font-size: 20px;
+}
+
+.liftB:hover::before {
+  content: 'Choose floor';
+  left: 5%;
+  color: limegreen;
 }
 
 .panel {
@@ -100,7 +134,7 @@ body {
 }
 
 .panel button:hover {
-  color: #9deaf0;
+  color: red;
   cursor: pointer;
 }
 
@@ -136,6 +170,25 @@ body {
   color: white;
   font-size: 20px;
   text-shadow: 3px 3px 8px white, -3px -3px 10px white;
+}
+
+.lift-animation {
+  animation: shake 500ms linear forwards;
+}
+
+@keyframes shake {
+  0% {
+    background-color: transparent;
+    opacity: 1;
+  }
+  50% {
+    background-color: rgba(158, 36, 15, 0.76);
+    opacity: 0;
+  }
+  100% {
+    background-color: transparent;
+    opacity: 1;
+  }
 }
 
 .overlay {
@@ -175,6 +228,22 @@ body {
   letter-spacing: 1px;
   line-height: 1.4;
   width: 55%;
+}
+
+.overlay.animate {
+  animation: vanish 1000ms ease-in-out forwards;
+}
+
+@keyframes vanish {
+  0% {
+    transform: translateY(0%);
+  }
+  15% {
+    transform: translateY(15%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
 }
 
 main {
@@ -247,13 +316,13 @@ main::before {
 
 .myPosition button {
   position: relative;
-  color: white;
+  color: limegreen;
   height: 10vh;
   padding: 12px 16px;
   font-size: 18px;
   border: 1px solid #298C93;
   background-color: transparent;
-  transition: all 100ms ease;
+  transition: all 200ms ease;
   cursor: pointer;
 }
 
@@ -277,8 +346,9 @@ i.up-arrow {
   color: red;
   left: 0;
   top: 10%;
-  opacity: 1;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 350ms ease;
 }
 
 i.down-arrow {
@@ -289,8 +359,9 @@ i.down-arrow {
   color: red;
   left: 0;
   top: 65%;
-  opacity: 1;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 350ms ease;
 }
 
 .light-ball {
