@@ -19,22 +19,20 @@
 		top: 10%;
 		width: 1px;
 		height: 60%;
-		background-color: red;
+		background-color: white;
 	}
 	&::before {
-		content: 'Eleveitar A';
+		content: '';
 		position: absolute;
-		left: 10%;
+		left: 5%;
 		top: -30%;
 		width: 100%;
 		height: 10px;
-		color: white;
+		color: red;
 		font-size: 20px;
 	}
 	&:hover::before {
 		content: 'Choose floor';
-		left: 5%;
-		color: red;
 	}
 }
 .liftB {
@@ -59,22 +57,20 @@
 		top: 10%;
 		width: 1px;
 		height: 60%;
-		background-color: limegreen;
+		background-color: white;
 	}
 	&::before {
-		content: 'Eleveitar B';
+		content: '';
 		position: absolute;
-		left: 10%;
+		left: 5%;
 		top: -30%;
 		width: 100%;
 		height: 10px;
-		color: white;
+		color: limegreen;
 		font-size: 20px;
 	}
 	&:hover::before {
 		content: 'Choose floor';
-		left: 5%;
-		color: limegreen;
 	}
 }
 .panel {
