@@ -7,29 +7,7 @@
 	background: black;
 	z-index: 1;
 	transition: transform 700ms ease-in-out;
-	@include fEven(column);
-	text-align: left;
-	h1 {
-		font-size: 6rem;
-		background: linear-gradient(to top, #283048, #859398);
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-		text-transform: uppercase;
-		span {
-			opacity: 0;
-		}
-	}
-	h2 {
-		color: rgba(255, 255, 255, 0.6);
-		font-size: 3rem;
-	}
-	h3 {
-		color: rgba(255, 255, 255, 0.7);
-		font-size: 1.8rem;
-		letter-spacing: 1px;
-		line-height: 1.4;
-		width: 55%;
-	}
+	padding-top: 30vh;
 }
 
 .overlay.animate {
@@ -48,13 +26,35 @@
 }
 .header {
 	width: 100%;
-	height: 30vh;
-	@include fCenter(column);
-}
-.header-typer {
-	width: 100%;
-	height: 30vh;
-	@include centered;
+	height: 30%;
+	@include fEven(column);
+	// border: $bd-white;
+	h1 {
+		font-size: 6rem;
+		background: linear-gradient(to top, #283048, #859398);
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-transform: uppercase;
+		// text-align: center;
+		span {
+			opacity: 0;
+		}
+	}
+	button {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 2rem;
+		padding: 3px 10px;
+		border: $bd-white;
+		border-radius: 5px;
+		outline: none;
+		background: transparent;
+		&:hover {
+			color: limegreen;
+			border: 1px solid $myBlue;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	}
 }
 
 span.animation {
@@ -70,7 +70,14 @@ span.animation {
 }
 
 @media only screen and (max-width: 800px) {
-	* {
-		font-size: 7px;
+	.header {
+		margin-top: 5vh;
+		span {
+			font-size: 2rem;
+		}
+		h2 {
+			font-size: 2rem;
+			text-align: center;
+		}
 	}
 }

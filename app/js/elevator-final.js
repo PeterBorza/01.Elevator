@@ -74,16 +74,15 @@ const elevator = () => {
 	block.append(liftA, myPosition, liftB);
 
 	// ***************************************************
-	// ***************************************************
-
 	//  EVENTLISTENERS on the main block element
 
 	block.addEventListener('click', e => {
 		let target = e.target;
 		let state = Number(target.innerText);
+
 		let currentPositionA;
 		let currentPositionB;
-		e.stopPropagation;
+		// e.stopPropagation;
 
 		// *************************************
 		// STATE CHANGES
