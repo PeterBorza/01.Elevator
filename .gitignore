@@ -1,0 +1,3 @@
+app/styles/ *.scss
+css/style.css.map
+.vscode/settings.json
