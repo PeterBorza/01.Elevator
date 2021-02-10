@@ -81,33 +81,43 @@ const elevator = () => {
 	block.addEventListener('click', e => {
 		let target = e.target;
 		let state = Number(target.innerText);
-
+		let currentPositionA;
+		let currentPositionB;
 		e.stopPropagation;
-		const mainButtons = Array.from(myPosition.children);
-		let currentPositionA = counterA;
-		let currentPositionB = counterB;
 
 		// *************************************
-		//  if elevator is on the floor already
+		// STATE CHANGES
+		currentPositionA = counterA;
+		currentPositionB = counterB;
 
-		if (counterA == state) {
+		if (state == currentPositionA && state !== currentPositionB) {
 			liftA.classList.add('lift-animation');
-			return;
-		} else if (counterB == state) {
+			// return;
+		} else if (state == currentPositionB && state !== currentPositionA) {
+			liftB.classList.add('lift-animation');
+			// return;
+		} else if (state == currentPositionA && state == currentPositionB) {
+			liftA.classList.add('lift-animation');
 			liftB.classList.add('lift-animation');
 			return;
 		} else {
 			liftA.classList.remove('lift-animation');
 			liftB.classList.remove('lift-animation');
 		}
+		// p(
+		// 	`state:${state} PosA:${currentPositionA} counterA:${counterA} PosB:${currentPositionB} counterB:${counterB} `
+		// );
 
-		// STATE CHANGE FUNCTIONS
+		// STATE CHANGE FUNCTIONS**************************************
+
+		const mainButtons = Array.from(myPosition.children);
 
 		const moveState = index => {
 			mainButtons.forEach(btn => {
-				btn.style.color = 'transparent';
+				btn.style.color = 'red';
 				Array.from(btn.children)[index].style.opacity = '1';
 			});
+			p('moving');
 		};
 
 		const transitionFinish = target => {
@@ -118,6 +128,7 @@ const elevator = () => {
 						item => (item.style.opacity = '0')
 					);
 				});
+				p('');
 			});
 		};
 
@@ -193,8 +204,8 @@ const elevator = () => {
 
 				transitionFinish(liftA);
 			} else if (
-				(counterA <= counterB && floorNumber > distanceAB) ||
-				(counterA >= counterB && floorNumber <= distanceAB)
+				(counterA < counterB && floorNumber > distanceAB) ||
+				(counterA > counterB && floorNumber <= distanceAB)
 			) {
 				liftB.style.transform = `translateY(${-floorNumber}00%)`;
 				liftLights(panelB, floorNumber);
@@ -205,9 +216,6 @@ const elevator = () => {
 
 				transitionFinish(liftB);
 			}
-			p(
-				`state: ${state} - currentPosA: ${currentPositionA} -  currentPosB: ${currentPositionB} - counterA: ${counterA} - counterB: ${counterB}`
-			);
 		} else return;
 	});
 

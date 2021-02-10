@@ -46,24 +46,22 @@ body {
   top: 10%;
   width: 1px;
   height: 60%;
-  background-color: red;
+  background-color: white;
 }
 
 .liftA::before {
-  content: 'Eleveitar A';
+  content: '';
   position: absolute;
-  left: 10%;
+  left: 5%;
   top: -30%;
   width: 100%;
   height: 10px;
-  color: white;
+  color: red;
   font-size: 20px;
 }
 
 .liftA:hover::before {
   content: 'Choose floor';
-  left: 5%;
-  color: red;
 }
 
 .liftB {
@@ -93,24 +91,22 @@ body {
   top: 10%;
   width: 1px;
   height: 60%;
-  background-color: limegreen;
+  background-color: white;
 }
 
 .liftB::before {
-  content: 'Eleveitar B';
+  content: '';
   position: absolute;
-  left: 10%;
+  left: 5%;
   top: -30%;
   width: 100%;
   height: 10px;
-  color: white;
+  color: limegreen;
   font-size: 20px;
 }
 
 .liftB:hover::before {
   content: 'Choose floor';
-  left: 5%;
-  color: limegreen;
 }
 
 .panel {
@@ -201,30 +197,32 @@ body {
   z-index: 1;
   transition: transform 700ms ease-in-out;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   text-align: left;
 }
 
 .overlay h1 {
-  color: rgba(255, 255, 255, 0.678);
-  font-size: 110px;
+  font-size: 6rem;
   background: linear-gradient(to top, #283048, #859398);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: uppercase;
 }
 
+.overlay h1 span {
+  opacity: 0;
+}
+
 .overlay h2 {
-  color: rgba(255, 255, 255, 0.781);
-  font-size: 45px;
-  margin-bottom: 3vh;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 3rem;
 }
 
 .overlay h3 {
-  color: rgba(255, 255, 255, 0.651);
-  font-size: 23px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.8rem;
   letter-spacing: 1px;
   line-height: 1.4;
   width: 55%;
@@ -246,6 +244,41 @@ body {
   }
 }
 
+.header {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header-typer {
+  width: 100%;
+  height: 30vh;
+  display: grid;
+  place-items: center;
+}
+
+span.animation {
+  animation: opacity 200ms linear forwards;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  * {
+    font-size: 7px;
+  }
+}
+
 main {
   position: relative;
   width: 100%;
@@ -262,6 +295,7 @@ main::before {
   left: 0;
   top: 0;
   background-image: url(/img/city.jpg);
+  filter: blur(100%);
   background-size: cover;
   background-position: center bottom;
   opacity: 0.8;
@@ -329,6 +363,23 @@ main::before {
 .myPosition button:hover {
   border: 1px solid green;
   color: rgba(255, 255, 255, 0.404);
+}
+
+.myPosition button::after {
+  position: absolute;
+  content: 'Call the elevator';
+  background-color: white;
+  border-radius: 2px;
+  color: black;
+  width: 100px;
+  left: 110%;
+  bottom: 85%;
+  font-size: 0.8rem;
+  opacity: 0;
+}
+
+.myPosition button:hover::after {
+  opacity: 1;
 }
 
 button.light-up {
