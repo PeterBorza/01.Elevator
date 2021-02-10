@@ -1,3 +1,9 @@
-app/styles/ *.scss
+
 css/style.css.map
 .vscode/settings.json
+app/styles/_globals.scss
+app/styles/_lift.scss
+app/styles/_mixins.scss
+app/styles/_overlay.scss
+app/styles/_variables.scss
+app/styles/style.scss
