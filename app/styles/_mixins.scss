@@ -1,0 +1,137 @@
+@mixin fAround($direction) {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: $direction;
+}
+
+@mixin fCenter($direction) {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: $direction;
+}
+
+@mixin fBetween($direction) {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: $direction;
+}
+
+@mixin fEven($direction) {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: $direction;
+}
+
+@mixin centered {
+	display: grid;
+	place-items: center;
+}
+
+@mixin flexWrap {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center; //child is flex: 1 1 <baseWidth>   or 0 1 <baseWidth> stand for flexgrow, flexshrink, and flex-basis
+}
+
+@mixin sideBar($a, $b) {
+	display: grid;
+	grid-template-columns: minmax($a, $b), 1fr;
+	// basewidth, min width of the sidebar
+}
+
+@mixin HMF {
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+}
+
+@mixin HeadFB {
+	display: grid;
+	grid-template: auto 1fr auto/auto 1fr auto;
+	// header grcol 1/4   left-side grcol 1/2  main grcol 2/3  right-side 3/4  footer grcol 1/4
+}
+
+@mixin twelveColumnsGrid {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	// children displayed with grid-column ex. 1/7, 2/5 etc.
+}
+
+@mixin RAM($a) {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax($a, 1fr));
+	// grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	// with auto-fill baseline  it does not increase !
+}
+
+@mixin lineUp($count) {
+	height: auto;
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat($count, 1fr);
+	// child : justify-content : space-between;
+	// flex-direction: column;
+}
+
+@mixin success {
+	color: limegreen;
+	// padding: 12px;
+	border: 2px solid limegreen;
+	font-weight: bold;
+	// width: 100px;
+}
+@mixin error {
+	color: crimson;
+	// padding: 12px;
+	border: 2px solid crimson;
+	font-weight: bold;
+	// width: 100px;
+}
+@mixin fixedDiv {
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	left: 0px;
+	top: 0px;
+	background-color: rgba(0, 0, 0, 0.8);
+	@include centered();
+}
+@mixin nightMode {
+	background-color: rgba(39, 37, 37, 0.89);
+	color: whitesmoke;
+}
+@mixin absoluteCenter($width, $height) {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: $width;
+	height: $height;
+}
+
+@mixin grid($columns, $rows, $base1, $base2) {
+	display: grid;
+	grid-template-columns: repeat($columns, $base1);
+	grid-template-rows: repeat($rows, $base2);
+	gap: 0.5rem;
+	justify-content: center;
+	align-content: center;
+}
+@mixin pseudo($pseudo-width, $pseudo-height, $left, $top) {
+	position: absolute;
+	content: '';
+	width: $pseudo-width;
+	height: $pseudo-height;
+	left: $left;
+	top: $top;
+}
+@mixin bubbles {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background: linear-gradient(to right, #4ac29a, #bdfff3);
+}
