@@ -1,46 +1,109 @@
 const main = document.querySelector('main');
 const p = console.log;
 
+// FUNCTIONS**********************************************
+
+// create element with classname
 const div = className => {
-	const x = document.createElement('div');
-	x.classList.add(className);
+	const element = document.createElement('div');
+	element.classList.add(className);
 
-	return x;
+	return element;
 };
-
+// adding arrows inside the floorbuttons via state
 const arrow = (element, direction) => {
 	const arrow = document.createElement('i');
-	arrow.classList.add('fas', `fa-chevron-${direction}`, `${direction}-arrow`);
+	arrow.classList.add('fas', `fa-sort-${direction}`, `${direction}-arrow`);
 	element.prepend(arrow);
 	return arrow;
 };
+// returns buttons number
+const numberOf = element => Number(element.getAttribute('data-number'));
+// iterating over arrays to find certain states
+const childrenOf = element => Array.from(element.children);
+//  the lifts are in motion
+const moveTo = (item, number) =>
+	(item.style.transform = `translateY(${-number}00%)`);
+// turn on/off the floorlights or the liftpanelbutton lights
+const toggleLightOf = (element, className, target) => {
+	const currentLitButton = childrenOf(element).find(
+		item => item.className === className
+	);
+	currentLitButton.classList.remove(className);
+	target.classList.add(className);
+	return currentLitButton;
+};
+// Controling the floor lights
+const floorLights = (parent, targetNumber) => {
+	childrenOf(parent).forEach(item => {
+		if (targetNumber === numberOf(item)) {
+			childrenOf(parent).forEach(item => {
+				item.classList.remove('light-up');
+			});
+			item.classList.add('light-up');
+			// toggleLightOf(parent, 'light-up', item);
+		}
+	});
+};
+//  Controling the buttonlights inside the lift
+const liftLights = (parent, targetNumber) => {
+	childrenOf(parent).forEach(item => {
+		if (targetNumber == numberOf(item)) {
+			childrenOf(parent).forEach(item => {
+				item.classList.remove('panel-open');
+			});
+			item.classList.add('panel-open');
+		}
+	});
+};
+//  Mapping over arrays to get buttons
+const renderButton = (_, i) => {
+	const btn = document.createElement('button');
+	btn.innerText = `${i}`;
+	btn.setAttribute('data-number', `${i}`);
+	return btn;
+};
+// panel buttons setup
+const elevatorPanelSetup = (index, liftName, panel) => {
+	const liftButtons = new Array(storeyCount)
+		.fill()
+		.map(renderButton)
+		.reverse();
+	liftButtons[index].classList.add('panel-open');
+	liftButtons.forEach(btn => {
+		btn.setAttribute('data-location', `lift${liftName}-button`);
+		panel.append(btn);
+	});
+	return liftButtons;
+};
+// while elevator is moving, floor  indicators are signaling direction and which elevator is moving
+const moveState = (arr, color, index) => {
+	arr.forEach(item => {
+		childrenOf(item)[index].style.opacity = '1';
+		childrenOf(item)[index].style.color = color;
+	});
+};
+//  alert when elevator is already on the requested floor
+const alertState = item => item.classList.add('lift-animation');
 
-// ****************************************
-//  SETUP
+// SETUP ****************************************
+
+const storeyCount = 7;
 
 const elevator = () => {
-	const storeyCount = 7;
 	const block = div('block');
 
-	// ******************************************
 	//  lift a and b position identifiers, counters.
 	let counterA = 0;
 	let counterB = 6;
-	// ******************************************
+
+	// ************************************************
 	//  LIFT A
 
 	const liftA = div('liftA');
 	const panelA = div('panel');
 	liftA.append(panelA);
-	const liftAButtons = new Array(storeyCount)
-		.fill()
-		.map(renderButton)
-		.reverse();
-	liftAButtons[6].classList.add('panel-open');
-	liftAButtons.forEach((btn, i) => {
-		btn.setAttribute('data-name', 'liftA-button');
-		panelA.append(btn);
-	});
+	elevatorPanelSetup(counterB, 'A', panelA);
 
 	// ************************************************
 	//  LIFT B
@@ -48,41 +111,34 @@ const elevator = () => {
 	const liftB = div('liftB');
 	const panelB = div('panel');
 	liftB.append(panelB);
-	const liftBButtons = new Array(storeyCount)
-		.fill()
-		.map(renderButton)
-		.reverse();
-	liftBButtons[0].classList.add('panel-open');
-	liftBButtons.forEach(btn => {
-		btn.setAttribute('data-name', 'liftB-button');
-		panelB.append(btn);
-	});
+	elevatorPanelSetup(counterA, 'B', panelB);
 
 	// SHAFT *********************************************
 
-	const myPosition = div('myPosition');
-	const buttons = new Array(storeyCount).fill().map(renderButton).reverse();
+	const shaft = div('shaft');
 
+	const buttons = new Array(storeyCount).fill().map(renderButton).reverse();
+	buttons[counterB].classList.add('light-up');
 	buttons.forEach(btn => {
-		btn.setAttribute('data-name', 'floor-button');
+		btn.setAttribute('data-location', 'floor-button');
 
 		arrow(btn, 'down');
 		arrow(btn, 'up');
-		myPosition.append(btn);
+		shaft.append(btn);
 	});
 
-	block.append(liftA, myPosition, liftB);
+	block.append(liftA, shaft, liftB);
 
 	// ***************************************************
 	//  EVENTLISTENERS on the main block element
 
 	block.addEventListener('click', e => {
 		let target = e.target;
-		let state = Number(target.innerText);
+		const floorButtons = childrenOf(shaft);
+		let state = numberOf(target);
 
 		let currentPositionA;
 		let currentPositionB;
-		// e.stopPropagation;
 
 		// *************************************
 		// STATE CHANGES
@@ -90,101 +146,72 @@ const elevator = () => {
 		currentPositionB = counterB;
 
 		if (state == currentPositionA && state !== currentPositionB) {
-			liftA.classList.add('lift-animation');
-			// return;
+			alertState(liftA);
 		} else if (state == currentPositionB && state !== currentPositionA) {
-			liftB.classList.add('lift-animation');
-			// return;
+			alertState(liftB);
 		} else if (state == currentPositionA && state == currentPositionB) {
-			liftA.classList.add('lift-animation');
-			liftB.classList.add('lift-animation');
+			alertState(liftA);
+			alertState(liftB);
 			return;
-		} else {
-			liftA.classList.remove('lift-animation');
-			liftB.classList.remove('lift-animation');
 		}
-		// p(
-		// 	`state:${state} PosA:${currentPositionA} counterA:${counterA} PosB:${currentPositionB} counterB:${counterB} `
-		// );
 
 		// STATE CHANGE FUNCTIONS**************************************
 
-		const mainButtons = Array.from(myPosition.children);
-
-		const moveState = index => {
-			mainButtons.forEach(btn => {
-				btn.style.color = 'red';
-				Array.from(btn.children)[index].style.opacity = '1';
-			});
-			p('moving');
-		};
-
+		//  transition ends and this happens
 		const transitionFinish = target => {
 			target.addEventListener('transitionend', () => {
-				mainButtons.forEach(btn => {
-					btn.style.color = 'limegreen';
-					Array.from(btn.children).forEach(
-						item => (item.style.opacity = '0')
-					);
+				floorButtons.forEach(btn => {
+					childrenOf(btn).forEach(item => (item.style.opacity = '0'));
 				});
-				p('');
 			});
 		};
 
 		// LIFT A BUTTONS***********************************************
 
-		if (target.getAttribute('data-name') == 'liftA-button') {
+		if (target.getAttribute('data-location') == 'liftA-button') {
 			// animating the panel buttons
-			Array.from(panelA.children).forEach(item => {
-				item.classList.remove('panel-open');
-			});
-			target.classList.add('panel-open');
 
-			liftA.style.transform = `translateY(${-state}00%)`;
+			toggleLightOf(panelA, 'panel-open', target);
 
-			floorLights(myPosition, state);
+			moveTo(liftA, state);
+
+			floorLights(shaft, state);
 			counterA = state;
 
-			// DIRECTION OF LIFT A
-
-			currentPositionA > counterA ? moveState(1) : moveState(0);
-
-			// TRANSITIONEND LIFT A
+			currentPositionA > counterA
+				? moveState(floorButtons, 'red', 1)
+				: moveState(floorButtons, 'red', 0);
 
 			transitionFinish(liftA);
 
 			// LIFT B BUTTONS********************************************
-		} else if (target.getAttribute('data-name') == 'liftB-button') {
+		} else if (target.getAttribute('data-location') == 'liftB-button') {
 			// animating the panel buttons
-			Array.from(panelB.children).forEach(item => {
-				item.classList.remove('panel-open');
-			});
-			target.classList.add('panel-open');
 
-			liftB.style.transform = `translateY(${-state}00%)`;
+			toggleLightOf(panelB, 'panel-open', target);
 
-			floorLights(myPosition, state);
+			moveTo(liftB, state);
+
+			floorLights(shaft, state);
 			counterB = state;
 
-			// DIRECTION OF LIFT B
-
-			currentPositionB > counterB ? moveState(1) : moveState(0);
-
-			// TRANSITIONEND LIFT B
+			currentPositionB > counterB
+				? moveState(floorButtons, 'limegreen', 1)
+				: moveState(floorButtons, 'limegreen', 0);
 
 			transitionFinish(liftB);
 
 			// FLOOR BUTTONS***********************************************
-		} else if (target.getAttribute('data-name') == 'floor-button') {
-			e.stopPropagation;
-			let floorNumber = Number(target.innerText);
+		} else if (target.getAttribute('data-location') == 'floor-button') {
+			let floorNumber = numberOf(target);
 			let distanceAB = Math.floor((counterA + counterB) / 2);
 
 			// **toggling the lights
 
-			mainButtons.forEach(item => {
-				item.classList.remove('light-up');
-			});
+			let activeFloorButton = floorButtons.find(
+				item => item.className === 'light-up'
+			);
+			activeFloorButton.classList.remove('light-up');
 			target.classList.add('light-up');
 
 			// *************************
@@ -194,24 +221,28 @@ const elevator = () => {
 				(counterA <= counterB && floorNumber <= distanceAB) ||
 				(counterA >= counterB && floorNumber > distanceAB)
 			) {
-				liftA.style.transform = `translateY(${-floorNumber}00%)`;
+				moveTo(liftA, floorNumber);
 				liftLights(panelA, floorNumber);
 				counterA = floorNumber;
 
 				//  State change
-				currentPositionA > counterA ? moveState(1) : moveState(0);
+				currentPositionA > counterA
+					? moveState(floorButtons, 'red', 1)
+					: moveState(floorButtons, 'red', 0);
 
 				transitionFinish(liftA);
 			} else if (
 				(counterA < counterB && floorNumber > distanceAB) ||
 				(counterA > counterB && floorNumber <= distanceAB)
 			) {
-				liftB.style.transform = `translateY(${-floorNumber}00%)`;
+				moveTo(liftB, floorNumber);
 				liftLights(panelB, floorNumber);
 				counterB = floorNumber;
 
 				// state change
-				currentPositionB > counterB ? moveState(1) : moveState(0);
+				currentPositionB > counterB
+					? moveState(floorButtons, 'limegreen', 1)
+					: moveState(floorButtons, 'limegreen', 0);
 
 				transitionFinish(liftB);
 			}
@@ -219,43 +250,6 @@ const elevator = () => {
 	});
 
 	return block;
-};
-
-// *******************************************************
-//  MAPPING THE BUTTON ARRAY
-
-const renderButton = (_, i) => {
-	const btn = document.createElement('button');
-	btn.innerText = `${i}`;
-
-	return btn;
-};
-
-// **********************************************
-// Controling the floor lights
-
-const floorLights = (parent, targetNumber) => {
-	parent.childNodes.forEach(child => {
-		if (targetNumber === Number(child.innerText)) {
-			parent.childNodes.forEach(child => {
-				child.classList.remove('light-up');
-			});
-			child.classList.add('light-up');
-		}
-	});
-};
-// ************************************************
-//  Controling the buttonlights inside the lift
-
-const liftLights = (parent, targetNumber) => {
-	parent.childNodes.forEach(item => {
-		if (targetNumber == Number(item.innerHTML)) {
-			parent.childNodes.forEach(item => {
-				item.classList.remove('panel-open');
-			});
-			item.classList.add('panel-open');
-		}
-	});
 };
 
 main.append(elevator());
