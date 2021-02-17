@@ -144,7 +144,7 @@ body {
 	order: 7;
 }
 
-.panel button.panel-open {
+.panel button.lift-lights {
 	color: white;
 	font-size: 1.2rem;
 	text-shadow: 3px 3px 8px white, -3px -3px 10px white;
@@ -176,7 +176,7 @@ body {
 	.panel button {
 		font-size: 0.7rem;
 	}
-	.panel button.panel-open {
+	.panel button.lift-lights {
 		font-size: 0.8rem;
 	}
 }
@@ -378,7 +378,7 @@ main::before {
 	z-index: 5;
 }
 
-button.light-up {
+button.level-lights {
 	color: #5fd9e2;
 	border: 1px solid #1a4b4e;
 	outline: 3px solid #056f77;
