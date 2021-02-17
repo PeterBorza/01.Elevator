@@ -18,7 +18,7 @@ const arrow = (element, direction) => {
 	return arrow;
 };
 // returns buttons number
-const numberOf = element => Number(element.getAttribute('data-number'));
+const numberOf = element => element.getAttribute('data-number');
 // iterating over arrays to find certain states
 const childrenOf = element => Array.from(element.children);
 //  the lifts are in motion
@@ -26,35 +26,19 @@ const moveTo = (item, number) =>
 	(item.style.transform = `translateY(${-number}00%)`);
 // turn on/off the floorlights or the liftpanelbutton lights
 const toggleLightOf = (element, className, target) => {
-	const currentLitButton = childrenOf(element).find(
-		item => item.className === className
-	);
-	currentLitButton.classList.remove(className);
+	childrenOf(element)
+		.find(item => item.className === className)
+		.classList.remove(className);
 	target.classList.add(className);
-	return currentLitButton;
 };
 // Controling the floor lights
-const floorLights = (parent, targetNumber) => {
-	childrenOf(parent).forEach(item => {
-		if (targetNumber === numberOf(item)) {
-			childrenOf(parent).forEach(item => {
-				item.classList.remove('light-up');
-			});
-			item.classList.add('light-up');
-			// toggleLightOf(parent, 'light-up', item);
-		}
-	});
-};
-//  Controling the buttonlights inside the lift
-const liftLights = (parent, targetNumber) => {
-	childrenOf(parent).forEach(item => {
-		if (targetNumber == numberOf(item)) {
-			childrenOf(parent).forEach(item => {
-				item.classList.remove('panel-open');
-			});
-			item.classList.add('panel-open');
-		}
-	});
+const controlLights = (parent, targetNumber, className) => {
+	childrenOf(parent)
+		.find(item => item.classList.contains(className))
+		.classList.remove(className);
+	childrenOf(parent).forEach(
+		item => targetNumber === numberOf(item) && item.classList.add(className)
+	);
 };
 //  Mapping over arrays to get buttons
 const renderButton = (_, i) => {
@@ -69,7 +53,7 @@ const elevatorPanelSetup = (index, liftName, panel) => {
 		.fill()
 		.map(renderButton)
 		.reverse();
-	liftButtons[index].classList.add('panel-open');
+	liftButtons[index].classList.add('lift-lights');
 	liftButtons.forEach(btn => {
 		btn.setAttribute('data-location', `lift${liftName}-button`);
 		panel.append(btn);

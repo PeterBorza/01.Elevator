@@ -1,13 +1,12 @@
 // SETUP ****************************************
 
 const storeyCount = 7;
+//  lift a and b position identifiers, counters.
+let counterA = 0;
+let counterB = 6;
 
 const elevator = () => {
 	const block = div('block');
-
-	//  lift a and b position identifiers, counters.
-	let counterA = 0;
-	let counterB = 6;
 
 	// ************************************************
 	//  LIFT A
@@ -30,7 +29,7 @@ const elevator = () => {
 	const shaft = div('shaft');
 
 	const buttons = new Array(storeyCount).fill().map(renderButton).reverse();
-	buttons[counterB].classList.add('light-up');
+	buttons[counterB].classList.add('level-lights');
 	buttons.forEach(btn => {
 		btn.setAttribute('data-location', 'floor-button');
 
@@ -46,8 +45,8 @@ const elevator = () => {
 
 	block.addEventListener('click', e => {
 		let target = e.target;
+		let state = target.getAttribute('data-number');
 		const floorButtons = childrenOf(shaft);
-		let state = numberOf(target);
 
 		let currentPositionA;
 		let currentPositionB;
@@ -69,99 +68,88 @@ const elevator = () => {
 
 		// STATE CHANGE FUNCTIONS**************************************
 
-		//  transition ends and this happens
+		//  lift arrives to desired level, liftlights go off
 		const transitionFinish = target => {
 			target.addEventListener('transitionend', () => {
-				floorButtons.forEach(btn => {
-					childrenOf(btn).forEach(item => (item.style.opacity = '0'));
-				});
+				document
+					.querySelectorAll('i')
+					.forEach(item => (item.style.opacity = '0'));
 			});
 		};
 
-		// LIFT A BUTTONS***********************************************
+		const elevatorIsOnFloor = (
+			currentFloor,
+			desiredFloor,
+			color,
+			whichLift
+		) => {
+			currentFloor > desiredFloor && moveState(floorButtons, color, 1);
+			currentFloor < desiredFloor && moveState(floorButtons, color, 0);
+			currentFloor = desiredFloor && alertState(whichLift);
+		};
 
-		if (target.getAttribute('data-location') == 'liftA-button') {
-			// animating the panel buttons
+		// ***** TARGETS
 
-			toggleLightOf(panelA, 'panel-open', target);
-
+		if (target.getAttribute('data-location') === 'liftA-button') {
+			toggleLightOf(panelA, 'lift-lights', target);
+			controlLights(shaft, state, 'level-lights');
 			moveTo(liftA, state);
-
-			floorLights(shaft, state);
 			counterA = state;
-
-			currentPositionA > counterA
-				? moveState(floorButtons, 'red', 1)
-				: moveState(floorButtons, 'red', 0);
-
+			elevatorIsOnFloor(currentPositionA, counterA, 'red', liftA);
 			transitionFinish(liftA);
-
-			// LIFT B BUTTONS********************************************
-		} else if (target.getAttribute('data-location') == 'liftB-button') {
-			// animating the panel buttons
-
-			toggleLightOf(panelB, 'panel-open', target);
-
+		} else if (target.getAttribute('data-location') === 'liftB-button') {
+			toggleLightOf(panelB, 'lift-lights', target);
+			controlLights(shaft, state, 'level-lights');
 			moveTo(liftB, state);
-
-			floorLights(shaft, state);
 			counterB = state;
-
-			currentPositionB > counterB
-				? moveState(floorButtons, 'limegreen', 1)
-				: moveState(floorButtons, 'limegreen', 0);
-
+			elevatorIsOnFloor(currentPositionB, counterB, 'limegreen', liftB);
 			transitionFinish(liftB);
+		} else if (target.getAttribute('data-location') === 'floor-button') {
+			floorButtons
+				.find(item => item.className === 'level-lights')
+				.classList.remove('level-lights');
+			target.classList.add('level-lights');
 
-			// FLOOR BUTTONS***********************************************
-		} else if (target.getAttribute('data-location') == 'floor-button') {
-			let floorNumber = numberOf(target);
-			let distanceAB = Math.floor((counterA + counterB) / 2);
-
-			// **toggling the lights
-
-			let activeFloorButton = floorButtons.find(
-				item => item.className === 'light-up'
-			);
-			activeFloorButton.classList.remove('light-up');
-			target.classList.add('light-up');
-
-			// *************************
 			// THE SYSTEM, CONDITIONED BY EACH LIFT'S POSITION.
 
-			if (
-				(counterA <= counterB && floorNumber <= distanceAB) ||
-				(counterA >= counterB && floorNumber > distanceAB)
-			) {
-				moveTo(liftA, floorNumber);
-				liftLights(panelA, floorNumber);
-				counterA = floorNumber;
+			let distanceOfAfromTarget = Math.abs(counterA - state);
+			let distanceOfBfromTarget = Math.abs(counterB - state);
 
-				//  State change
-				currentPositionA > counterA
-					? moveState(floorButtons, 'red', 1)
-					: moveState(floorButtons, 'red', 0);
+			// ************** FUNCTIONS **********************
 
+			const liftAisMoving = () => {
+				moveTo(liftA, state);
+				controlLights(panelA, state, 'lift-lights');
+				counterA = state;
+				elevatorIsOnFloor(currentPositionA, counterA, 'red', liftA);
 				transitionFinish(liftA);
-			} else if (
-				(counterA < counterB && floorNumber > distanceAB) ||
-				(counterA > counterB && floorNumber <= distanceAB)
-			) {
-				moveTo(liftB, floorNumber);
-				liftLights(panelB, floorNumber);
-				counterB = floorNumber;
-
-				// state change
-				currentPositionB > counterB
-					? moveState(floorButtons, 'limegreen', 1)
-					: moveState(floorButtons, 'limegreen', 0);
-
+			};
+			const liftBisMoving = () => {
+				moveTo(liftB, state);
+				controlLights(panelB, state, 'lift-lights');
+				counterB = state;
+				elevatorIsOnFloor(
+					currentPositionB,
+					counterB,
+					'limegreen',
+					liftB
+				);
 				transitionFinish(liftB);
+			};
+
+			// ****************** CONCEPT ***********************
+
+			if (distanceOfAfromTarget < distanceOfBfromTarget) {
+				liftAisMoving();
+			} else if (distanceOfAfromTarget > distanceOfBfromTarget) {
+				liftBisMoving();
+			} else if (counterA <= counterB) {
+				liftAisMoving();
+			} else {
+				liftBisMoving();
 			}
 		} else return;
 	});
-
 	return block;
 };
-
 main.append(elevator());
