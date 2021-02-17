@@ -45,21 +45,17 @@ const renderButton = (_, i) => {
 	const btn = document.createElement('button');
 	btn.innerText = `${i}`;
 	btn.setAttribute('data-number', `${i}`);
+
 	return btn;
 };
-// panel buttons setup
-const elevatorPanelSetup = (index, liftName, panel) => {
-	const liftButtons = new Array(storeyCount)
-		.fill()
-		.map(renderButton)
-		.reverse();
-	liftButtons[index].classList.add('lift-lights');
-	liftButtons.forEach(btn => {
-		btn.setAttribute('data-location', `lift${liftName}-button`);
-		panel.append(btn);
-	});
-	return liftButtons;
+const renderLiftButton = item => {
+	const btn = document.createElement('button');
+	btn.innerText = `${item}`;
+	btn.setAttribute('data-number', `${item}`);
+
+	return btn;
 };
+
 // while elevator is moving, floor  indicators are signaling direction and which elevator is moving
 const moveState = (arr, color, index) => {
 	arr.forEach(item => {
@@ -69,3 +65,32 @@ const moveState = (arr, color, index) => {
 };
 //  alert when elevator is already on the requested floor
 const alertState = item => item.classList.add('lift-animation');
+// ******
+//  liftbuttons array
+const swapPairs = n => {
+	const arr = Array(n)
+		.fill()
+		.map((_, i) => i)
+		.reverse();
+	const myArr = [];
+	arr.forEach(
+		(item, i) =>
+			item % 2 == 0 && myArr.push(...arr.slice(i, i + 2).reverse())
+	);
+	return myArr;
+};
+
+// panel buttons setup
+const elevatorPanelSetup = (index, liftName, panel) => {
+	let myArr = swapPairs(storeyCount);
+	const liftButtons = myArr.map(renderLiftButton);
+	liftButtons[index].classList.add('lift-lights');
+	liftButtons.forEach(btn => {
+		btn.setAttribute('data-location', `lift${liftName}-button`);
+		if (btn.getAttribute('data-number') % 2 == 1) {
+			btn.style.borderRight = '1px solid white';
+		}
+		panel.append(btn);
+	});
+	return liftButtons;
+};
