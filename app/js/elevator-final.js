@@ -8,6 +8,14 @@ let counterB = 6;
 const elevator = () => {
 	const block = div('block');
 
+	const audioFile = document.createElement('audio');
+	audioFile.setAttribute('controls', 'true');
+	audioFile.setAttribute('src', '/img/Elevatormusic.mp3');
+	audioFile.setAttribute('autoplay', 'autoplay');
+	audioFile.setAttribute('loop', 'loop');
+	audioFile.setAttribute('type', 'audio/mpeg');
+	main.append(audioFile);
+
 	// ************************************************
 	//  LIFT A
 
