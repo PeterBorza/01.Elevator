@@ -22,7 +22,7 @@ const elevator = () => {
 	const liftB = div('liftB');
 	const panelB = div('panel');
 	liftB.append(panelB);
-	elevatorPanelSetup(counterA, 'B', panelB);
+	elevatorPanelSetup(1, 'B', panelB);
 
 	// SHAFT *********************************************
 
@@ -32,9 +32,14 @@ const elevator = () => {
 	buttons[counterB].classList.add('level-lights');
 	buttons.forEach(btn => {
 		btn.setAttribute('data-location', 'floor-button');
-
 		arrow(btn, 'down');
 		arrow(btn, 'up');
+		btn.addEventListener('click', e => {
+			childrenOf(shaft)
+				.find(item => item.classList.contains('level-lights'))
+				.classList.remove('level-lights');
+			e.target.classList.add('level-lights');
+		});
 		shaft.append(btn);
 	});
 
@@ -47,7 +52,6 @@ const elevator = () => {
 		let target = e.target;
 		let state = target.getAttribute('data-number');
 		const floorButtons = childrenOf(shaft);
-
 		let currentPositionA;
 		let currentPositionB;
 
@@ -105,11 +109,6 @@ const elevator = () => {
 			elevatorIsOnFloor(currentPositionB, counterB, 'limegreen', liftB);
 			transitionFinish(liftB);
 		} else if (target.getAttribute('data-location') === 'floor-button') {
-			floorButtons
-				.find(item => item.className === 'level-lights')
-				.classList.remove('level-lights');
-			target.classList.add('level-lights');
-
 			// THE SYSTEM, CONDITIONED BY EACH LIFT'S POSITION.
 
 			let distanceOfAfromTarget = Math.abs(counterA - state);
