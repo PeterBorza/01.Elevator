@@ -137,10 +137,6 @@ body {
 	background-color: black;
 	outline: 3px solid rgba(197, 10, 10, 0.836);
 	outline-offset: -8px;
-	box-shadow: inset 5px 5px 15px rgba(207, 15, 15, 0.74),
-		inset -5px -5px 15px rgba(207, 15, 15, 0.74),
-		inset 5px 5px 30px rgba(207, 15, 15, 0.74),
-		inset -5px -5px 30px rgba(207, 15, 15, 0.74);
 	transform: translateX(-100%);
 	transition: transform 500ms ease-out;
 }
@@ -149,8 +145,6 @@ body {
 	transform: translateX(100%);
 	outline: 3px solid limegreen;
 	outline-offset: -8px;
-	box-shadow: inset 5px 5px 15px limegreen, inset -5px -5px 15px limegreen,
-		inset -5px -5px 30px limegreen, inset 5px 5px 30px limegreen;
 }
 .doorA.closed {
 	animation: doorsA 3000ms linear forwards;
@@ -185,6 +179,24 @@ body {
 	100% {
 		transform: translateX(100%);
 	}
+}
+.doorA::after {
+	position: absolute;
+	content: 'X';
+	font-size: 70px;
+	color: rgba(201, 18, 18, 0.726);
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.doorB::after {
+	position: absolute;
+	content: 'X';
+	font-size: 70px;
+	color: rgba(50, 205, 50, 0.705);
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 @keyframes shake {
@@ -326,8 +338,14 @@ main::before {
 	background-position: center bottom;
 	opacity: 0.8;
 }
-.audio {
-	z-index: 10;
+audio {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	right: 0;
+	top: 0;
+	margin: auto;
+	opacity: 0.3;
 }
 
 .block {
@@ -335,7 +353,7 @@ main::before {
 	width: 400px;
 	max-width: 90%;
 	height: 91vh;
-	margin: auto;
+	margin: 2vh auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
