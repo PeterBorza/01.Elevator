@@ -94,3 +94,11 @@ const elevatorPanelSetup = (index, liftName, panel) => {
 	});
 	return liftButtons;
 };
+const doorsTransition = (door, buttons) => {
+	door.classList.add('closed');
+	setTimeout(() => {
+		door.classList.remove('closed');
+		buttons.forEach(btn => (btn.style.pointerEvents = 'all'));
+	}, 3200);
+	buttons.forEach(btn => (btn.style.pointerEvents = 'none'));
+};
