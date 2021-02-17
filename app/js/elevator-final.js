@@ -12,16 +12,18 @@ const elevator = () => {
 	//  LIFT A
 
 	const liftA = div('liftA');
+	const doorA = div('doorA');
 	const panelA = div('panel');
-	liftA.append(panelA);
+	liftA.append(panelA, doorA);
 	elevatorPanelSetup(counterB, 'A', panelA);
 
 	// ************************************************
 	//  LIFT B
 
 	const liftB = div('liftB');
+	const doorB = div('doorB');
 	const panelB = div('panel');
-	liftB.append(panelB);
+	liftB.append(panelB, doorB);
 	elevatorPanelSetup(1, 'B', panelB);
 
 	// SHAFT *********************************************
@@ -95,19 +97,21 @@ const elevator = () => {
 		// ***** TARGETS
 
 		if (target.getAttribute('data-location') === 'liftA-button') {
+			doorsTransition(doorA, floorButtons);
 			toggleLightOf(panelA, 'lift-lights', target);
 			controlLights(shaft, state, 'level-lights');
 			moveTo(liftA, state);
 			counterA = state;
 			elevatorIsOnFloor(currentPositionA, counterA, 'red', liftA);
-			transitionFinish(liftA);
+			transitionFinish(liftA, doorA);
 		} else if (target.getAttribute('data-location') === 'liftB-button') {
+			doorsTransition(doorB, floorButtons);
 			toggleLightOf(panelB, 'lift-lights', target);
 			controlLights(shaft, state, 'level-lights');
 			moveTo(liftB, state);
 			counterB = state;
 			elevatorIsOnFloor(currentPositionB, counterB, 'limegreen', liftB);
-			transitionFinish(liftB);
+			transitionFinish(liftB, doorB);
 		} else if (target.getAttribute('data-location') === 'floor-button') {
 			// THE SYSTEM, CONDITIONED BY EACH LIFT'S POSITION.
 
@@ -117,6 +121,7 @@ const elevator = () => {
 			// ************** FUNCTIONS **********************
 
 			const liftAisMoving = () => {
+				doorsTransition(doorA, floorButtons);
 				moveTo(liftA, state);
 				controlLights(panelA, state, 'lift-lights');
 				counterA = state;
@@ -124,6 +129,7 @@ const elevator = () => {
 				transitionFinish(liftA);
 			};
 			const liftBisMoving = () => {
+				doorsTransition(doorB, floorButtons);
 				moveTo(liftB, state);
 				controlLights(panelB, state, 'lift-lights');
 				counterB = state;
