@@ -22,8 +22,10 @@ const numberOf = element => element.getAttribute('data-number');
 // iterating over arrays to find certain states
 const childrenOf = element => Array.from(element.children);
 //  the lifts are in motion
-const moveTo = (item, number) =>
-	(item.style.transform = `translateY(${-number}00%)`);
+const moveTo = (item, number) => {
+	item.style.transform = `translateY(${-number}00%)`;
+	item.classList.add('speed');
+};
 // turn on/off the floorlights or the liftpanelbutton lights
 const toggleLightOf = (element, className, target) => {
 	childrenOf(element)
@@ -102,3 +104,5 @@ const doorsTransition = (door, buttons) => {
 	}, 3200);
 	buttons.forEach(btn => (btn.style.pointerEvents = 'none'));
 };
+
+// ************************************

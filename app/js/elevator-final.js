@@ -8,13 +8,7 @@ let counterB = 6;
 const elevator = () => {
 	const block = div('block');
 
-	const audioFile = document.createElement('audio');
-	audioFile.setAttribute('controls', 'true');
-	audioFile.setAttribute('src', '/img/Elevatormusic.mp3');
-	audioFile.setAttribute('autoplay', 'autoplay');
-	audioFile.setAttribute('loop', 'loop');
-	audioFile.setAttribute('type', 'audio/mpeg');
-	main.append(audioFile);
+	main.innerHTML += `<audio controls autoplay loop src='/img/music.mp3' type='audio/mpeg'></audio>`;
 
 	// ************************************************
 	//  LIFT A
@@ -58,7 +52,11 @@ const elevator = () => {
 	// ***************************************************
 	//  EVENTLISTENERS on the main block element
 
-	block.addEventListener('click', e => {
+	block.addEventListener('click', e => commandPanel(e));
+	block.addEventListener('mouseover', e => insideElevator(e));
+	block.addEventListener('mouseout', e => outsideElevator(e));
+
+	const commandPanel = e => {
 		let target = e.target;
 		let state = target.getAttribute('data-number');
 		const floorButtons = childrenOf(shaft);
@@ -162,7 +160,22 @@ const elevator = () => {
 				liftBisMoving();
 			}
 		} else return;
-	});
+	};
+	// *******************************************************
+	const insideElevator = e => {
+		let target = e.target;
+		target.getAttribute('data-location') === 'floor-button' &&
+			commands(target, panelA, panelB);
+		liftInfo.style.opacity = '1';
+	};
+	// *******************************************************
+	const outsideElevator = e => {
+		let target = e.target;
+		if (target.getAttribute('data-location') === 'floor-button') {
+			liftInfo.style.opacity = '0';
+		}
+	};
+
 	return block;
 };
 main.append(elevator());
