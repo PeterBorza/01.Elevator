@@ -37,8 +37,6 @@ body {
 	align-items: center;
 	flex-direction: row;
 	overflow: hidden;
-	transition: transform 2000ms ease-out;
-	transition-delay: 500ms;
 }
 
 .liftA::before {
@@ -74,8 +72,6 @@ body {
 	align-items: center;
 	flex-direction: row;
 	overflow: hidden;
-	transition: transform 2000ms linear;
-	transition-delay: 500ms;
 }
 
 .liftB::before {
@@ -93,6 +89,11 @@ body {
 	content: 'Choose floor';
 }
 
+.liftA.speed,
+.liftB.speed {
+	transition: transform 2400ms ease-out;
+	transition-delay: 400ms;
+}
 .panel {
 	position: relative;
 	width: 40%;
@@ -100,7 +101,6 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	border-radius: 5px 0px 5px 0px;
-	transition: opacity 300ms ease-in;
 }
 
 .panel button {
@@ -146,27 +146,11 @@ body {
 	outline: 3px solid limegreen;
 	outline-offset: -8px;
 }
-.doorA.closed {
-	animation: doorsA 3000ms linear forwards;
-}
-@keyframes doorsA {
-	0% {
-		transform: translateX(-100%);
-	}
-	10% {
-		transform: translateX(0%);
-	}
-	90% {
-		transform: translateX(0%);
-	}
-	100% {
-		transform: translateX(-100%);
-	}
-}
+.doorA.closed,
 .doorB.closed {
-	animation: doorsB 3000ms linear forwards;
+	animation: doors 3000ms linear forwards;
 }
-@keyframes doorsB {
+@keyframes doors {
 	0% {
 		transform: translateX(100%);
 	}
@@ -467,4 +451,26 @@ i.down-arrow {
 	transition: opacity 350ms ease;
 }
 
+.command-line {
+	position: absolute;
+	left: 5%;
+	top: 5%;
+	padding: 1rem;
+	background-color: transparent;
+	border: 2px solid rgba(202, 196, 196, 0.432);
+	border-radius: 3px;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.command-line h3 {
+	display: inline;
+	letter-spacing: 1px;
+	margin-top: 0.5rem;
+}
+.command-line span {
+	padding-left: 0.5rem;
+}
 /*# sourceMappingURL=style.css.map */
