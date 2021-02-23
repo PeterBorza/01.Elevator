@@ -53,30 +53,13 @@ const elevator = () => {
 	//  EVENTLISTENERS on the main block element
 
 	block.addEventListener('click', e => commandPanel(e));
-	block.addEventListener('mouseover', e => insideElevator(e));
-	block.addEventListener('mouseout', e => outsideElevator(e));
 
 	const commandPanel = e => {
 		let target = e.target;
 		let state = target.getAttribute('data-number');
 		const floorButtons = childrenOf(shaft);
-		let currentPositionA;
-		let currentPositionB;
-
-		// *************************************
-		// STATE CHANGES
-		currentPositionA = counterA;
-		currentPositionB = counterB;
-
-		if (state == currentPositionA && state !== currentPositionB) {
-			alertState(liftA);
-		} else if (state == currentPositionB && state !== currentPositionA) {
-			alertState(liftB);
-		} else if (state == currentPositionA && state == currentPositionB) {
-			alertState(liftA);
-			alertState(liftB);
-			return;
-		}
+		let currentPositionA = counterA;
+		let currentPositionB = counterB;
 
 		// STATE CHANGE FUNCTIONS**************************************
 
@@ -89,15 +72,9 @@ const elevator = () => {
 			});
 		};
 
-		const elevatorIsOnFloor = (
-			currentFloor,
-			desiredFloor,
-			color,
-			whichLift
-		) => {
+		const elevatorIsOnFloor = (currentFloor, desiredFloor, color) => {
 			currentFloor > desiredFloor && moveState(floorButtons, color, 1);
 			currentFloor < desiredFloor && moveState(floorButtons, color, 0);
-			currentFloor = desiredFloor && alertState(whichLift);
 		};
 
 		// ***** TARGETS
@@ -108,7 +85,7 @@ const elevator = () => {
 			controlLights(shaft, state, 'level-lights');
 			moveTo(liftA, state);
 			counterA = state;
-			elevatorIsOnFloor(currentPositionA, counterA, 'red', liftA);
+			elevatorIsOnFloor(currentPositionA, counterA, 'red');
 			transitionFinish(liftA, doorA);
 		} else if (target.getAttribute('data-location') === 'liftB-button') {
 			doorsTransition(doorB, floorButtons);
@@ -116,7 +93,7 @@ const elevator = () => {
 			controlLights(shaft, state, 'level-lights');
 			moveTo(liftB, state);
 			counterB = state;
-			elevatorIsOnFloor(currentPositionB, counterB, 'limegreen', liftB);
+			elevatorIsOnFloor(currentPositionB, counterB, 'limegreen');
 			transitionFinish(liftB, doorB);
 		} else if (target.getAttribute('data-location') === 'floor-button') {
 			// THE SYSTEM, CONDITIONED BY EACH LIFT'S POSITION.
@@ -160,20 +137,6 @@ const elevator = () => {
 				liftBisMoving();
 			}
 		} else return;
-	};
-	// *******************************************************
-	const insideElevator = e => {
-		let target = e.target;
-		target.getAttribute('data-location') === 'floor-button' &&
-			commands(target, panelA, panelB);
-		liftInfo.style.opacity = '1';
-	};
-	// *******************************************************
-	const outsideElevator = e => {
-		let target = e.target;
-		if (target.getAttribute('data-location') === 'floor-button') {
-			liftInfo.style.opacity = '0';
-		}
 	};
 
 	return block;

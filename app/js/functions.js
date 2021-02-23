@@ -65,9 +65,6 @@ const moveState = (arr, color, index) => {
 		childrenOf(item)[index].style.color = color;
 	});
 };
-//  alert when elevator is already on the requested floor
-const alertState = item => item.classList.add('lift-animation');
-// ******
 //  liftbuttons array
 const swapPairs = n => {
 	const arr = Array(n)
@@ -104,5 +101,3 @@ const doorsTransition = (door, buttons) => {
 	}, 3200);
 	buttons.forEach(btn => (btn.style.pointerEvents = 'none'));
 };
-
-// ************************************
